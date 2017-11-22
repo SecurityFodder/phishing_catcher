@@ -13,6 +13,8 @@ import re
 import certstream
 import tqdm
 import entropy
+import logging
+import logging.handlers
 from tld import get_tld
 from Levenshtein import distance
 from termcolor import colored, cprint
@@ -22,6 +24,15 @@ from suspicious import keywords, tlds
 log_suspicious = 'suspicious_domains.log'
 
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
+
+rootLogger = logging.getLogger('')
+rootLogger.setLevel(logging.DEBUG)
+
+#I'm not syslogging to the default port - you'll need to change this
+socketHandler = logging.handlers.SocketHandler('localhost',
+                                                1514)
+rootLogger.addHandler(socketHandler)
+logging.info('Cert-scanner started!')
 
 def score_domain(domain):
     """Score `domain`.
