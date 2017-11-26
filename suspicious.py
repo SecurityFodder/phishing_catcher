@@ -97,7 +97,7 @@ keywords = {
     'santander': 60,
     'morganstanley': 60,
     'barclays': 50,
-    'hsbc': 50,
+    'hsbc': 90,
     'scottrade': 60,
     'ameritrade': 60,
     'merilledge': 60,

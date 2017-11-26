@@ -19,9 +19,25 @@ from termcolor import colored, cprint
 
 from suspicious import keywords, tlds
 
+import logging
+import logging.handlers
+
+my_logger = logging.getLogger('MyLogger')
+my_logger.setlevel(logging.DEBUG)
+handler = logging.handlers.SysLogHandler()
+my_logger.addHandler(handler)
+
 log_suspicious = 'suspicious_domains.log'
 
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
+
+def leef(eventID, data):
+    head = 'LEEF:1.0|BeepBoop|Certy|1.0|{}|^|'.format(eventId)
+    body = ''
+    keys = data.keys()
+    for key in keys:
+        body =  body + '{}={}^'.format(key, keys[key]
+    return head + body
 
 def score_domain(domain):
     """Score `domain`.
@@ -101,10 +117,12 @@ def callback(message, context):
             if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
                 score += 10
 
-            if score >= 100:
+            if score >= 100
+                data =
                 tqdm.tqdm.write(
                     "[!] Suspicious: "
                     "{} (score={})".format(colored(domain, 'red', attrs=['underline', 'bold']), score))
+                my_logger()
             elif score >= 90:
                 tqdm.tqdm.write(
                     "[!] Suspicious: "
@@ -121,6 +139,8 @@ def callback(message, context):
             if score >= 75:
                 with open(log_suspicious, 'a') as f:
                     f.write("{}\n".format(domain))
+
+
 
 
 certstream.listen_for_events(callback)
